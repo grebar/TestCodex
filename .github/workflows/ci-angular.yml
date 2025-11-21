@@ -6,6 +6,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -32,18 +34,15 @@ jobs:
       - name: Build Angular project
         run: npm run build -- --output-path=dist --base-href=/<REPO-NAME>/
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+      - name: Upload artifact (NEW v3)
+        uses: actions/upload-pages-artifact@v3
         with:
           path: serpapi-search/dist/
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
 
     steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+      - name: Deploy to GitHub Pages (NEW v4)
+        uses: actions/deploy-pages@v4
