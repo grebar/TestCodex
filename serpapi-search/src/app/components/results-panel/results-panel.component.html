@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="heading">
+    <h3>{{ translate('results') }}</h3>
+    <div class="pagination-controls">
+      <button mat-stroked-button color="primary" (click)="prev()" [disabled]="page <= 1 || loading">
+        <mat-icon>chevron_left</mat-icon>
+        {{ translate('pageLabel') }} {{ page - 1 }}
+      </button>
+      <button mat-stroked-button color="primary" (click)="next()" [disabled]="loading">
+        {{ translate('pageLabel') }} {{ page + 1 }}
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="loading">
+    <div class="center">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!loading && error">
+    <mat-card class="error-card" color="warn">
+      <mat-card-title>{{ error }}</mat-card-title>
+    </mat-card>
+  </ng-container>
+
+  <ng-container *ngIf="!loading && !error && !hasResults">
+    <div class="empty">{{ translate('noResults') }}</div>
+  </ng-container>
+
+  <ng-container *ngIf="!loading && !error && hasResults">
+    <div *ngIf="type === 'web'" class="results-list">
+      <mat-card class="result-card" *ngFor="let item of response?.organic_results">
+        <mat-card-header>
+          <mat-card-title><a [href]="item.link" target="_blank" rel="noreferrer">{{ item.title }}</a></mat-card-title>
+          <mat-card-subtitle>{{ item.displayed_link }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="result-snippet">{{ item.snippet }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div *ngIf="type === 'image'" class="result-grid">
+      <mat-card class="result-card" *ngFor="let img of response?.images_results || response?.inline_images">
+        <img mat-card-image [src]="img.thumbnail || img.original" [alt]="img.title" />
+        <mat-card-content>
+          <div class="image-title">{{ img.title }}</div>
+          <a [href]="img.link" target="_blank" rel="noreferrer">{{ img.source || img.link }}</a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+</div>

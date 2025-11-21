@@ -1,0 +1,39 @@
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.error-card {
+  margin-top: 8px;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.image-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.empty {
+  color: #666;
+}

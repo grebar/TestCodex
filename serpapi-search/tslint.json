@@ -1,0 +1,12 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "quotemark": [true, "single"],
+    "semicolon": [true, "always"],
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    "max-classes-per-file": false,
+    "interface-name": false,
+    "member-access": false
+  }
+}
