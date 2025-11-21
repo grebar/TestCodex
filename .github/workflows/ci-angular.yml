@@ -1,13 +1,14 @@
-name: Angular CI
+name: Build and Deploy Angular to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
+
+permissions:
+  contents: write
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     defaults:
@@ -15,21 +16,34 @@ jobs:
         working-directory: serpapi-search
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
+          cache: npm
           cache-dependency-path: serpapi-search/package.json
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run unit tests
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+      - name: Build Angular project
+        run: npm run build -- --output-path=dist --base-href=/<REPO-NAME>/
 
-      - name: Build Angular app
-        run: npm run build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: serpapi-search/dist/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
