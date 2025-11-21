@@ -1,80 +1,20 @@
 @use '@angular/material' as mat;
 
-/* ============================================
-   MATERIAL 3 – PALETTES
-   (equivalenti al tuo tema originale)
-============================================ */
+$primary: mat.define-palette(mat.$indigo-palette);
+$accent:  mat.define-palette(mat.$amber-palette);
+$warn:    mat.define-palette(mat.$red-palette);
 
-$primary-palette: mat.define-palette(mat.$indigo-palette);
-$secondary-palette: mat.define-palette(mat.$amber-palette);
-$warn-palette: mat.define-palette(mat.$red-palette);
-
-
-/* ============================================
-   COLOR CONFIGS – LIGHT / DARK
-============================================ */
-
-/* Light theme */
-$light-color-config: mat.define-color-config((
-  primary: $primary-palette,
-  secondary: $secondary-palette,
-  error: $warn-palette,
+$theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+  )
 ));
 
-/* Dark theme */
-$dark-color-config: mat.define-color-config((
-  primary: $primary-palette,
-  secondary: $secondary-palette,
-  error: $warn-palette,
-  theme-type: dark,
-));
+@include mat.all-component-themes($theme);
 
-
-/* ============================================
-   TYPOGRAPHY & DENSITY
-   (equivalenti al tuo m2-define-typography-config)
-============================================ */
-
-$typography-config: mat.define-typography-config();
-$density-config: 0;
-
-
-/* ============================================
-   FINAL THEMES (LIGHT / DARK)
-============================================ */
-
-$light-theme: mat.define-theme((
-  color: $light-color-config,
-  typography: $typography-config,
-  density: $density-config,
-));
-
-$dark-theme: mat.define-theme((
-  color: $dark-color-config,
-  typography: $typography-config,
-  density: $density-config,
-));
-
-
-/* ============================================
-   MATERIAL THEMING APPLICATION
-   (Light default, Dark togglable via .dark-theme)
-============================================ */
-
-/* Default: Light theme */
-@include mat.all-component-themes($light-theme);
-
-/* Dark theme (apply by adding class="dark-theme" to <body>) */
-.dark-theme {
-  @include mat.all-component-colors($dark-theme);
-  @include mat.all-component-typographies($dark-theme);
-  @include mat.all-component-densities($dark-theme);
-}
-
-
-/* ============================================
-   GLOBAL CUSTOM STYLES (copiati dal tuo file)
-============================================ */
+/* GLOBAL STYLES (copiati dal tuo file) */
 
 body {
   margin: 0;
