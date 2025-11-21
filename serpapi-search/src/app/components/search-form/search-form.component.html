@@ -1,0 +1,54 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="card">
+  <div class="search-actions">
+    <mat-form-field appearance="outline" class="query-field">
+      <mat-label>{{ translate('queryPlaceholder') }}</mat-label>
+      <input matInput formControlName="query" [placeholder]="translate('queryPlaceholder')" />
+      <button mat-icon-button matSuffix type="submit" [disabled]="loading">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translate('searchType') }}</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="web">{{ translate('webSearch') }}</mat-option>
+        <mat-option value="image">{{ translate('imageSearch') }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translate('languageLabel') }}</mat-label>
+      <mat-select formControlName="language" (selectionChange)="onLanguageChange($event.value)">
+        <mat-option *ngFor="let lang of languages" [value]="lang">{{ lang.toUpperCase() }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="search-actions">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ translate('dateFilter') }}</mat-label>
+      <mat-select formControlName="dateRestrict">
+        <mat-option *ngFor="let option of dateOptions" [value]="option.value">{{ option.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="site-field">
+      <mat-label>{{ translate('siteFilter') }}</mat-label>
+      <input matInput formControlName="siteSearch" placeholder="example.com" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="api-key">
+      <mat-label>{{ translate('apiKeyLabel') }}</mat-label>
+      <input matInput formControlName="apiKey" placeholder="YOUR_SERPAPI_KEY" type="password" />
+      <button mat-stroked-button color="primary" type="submit" [disabled]="loading">{{ translate('saveKey') }}</button>
+    </mat-form-field>
+  </div>
+
+  <div class="actions-row">
+    <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+      <mat-icon>search</mat-icon>
+      {{ translate('searchButton') }}
+    </button>
+    <span class="helper">{{ translate('formHelp') }}</span>
+  </div>
+</form>

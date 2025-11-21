@@ -1,0 +1,38 @@
+<div class="app-container">
+  <mat-toolbar color="primary" class="header-toolbar" role="banner">
+    <div class="toolbar-content">
+      <div>
+        <div class="title">{{ translate('title') }}</div>
+        <div class="subtitle">{{ translate('subtitle') }}</div>
+      </div>
+      <div class="request-counter" role="status">
+        <mat-chip-set>
+          <mat-chip color="accent" highlighted>
+            {{ translate('requestsUsed') }}: {{ requestsUsed }} / {{ limit }}
+          </mat-chip>
+        </mat-chip-set>
+        <button mat-button color="accent" (click)="resetCounter()">{{ translate('resetCounter') }}</button>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <main class="content">
+    <app-search-form
+      [translate]="translate"
+      [language]="language"
+      [loading]="loading"
+      (search)="onSearch($event)"
+      (languageChange)="onLanguageChange($event)"
+    ></app-search-form>
+
+    <app-results-panel
+      [response]="response"
+      [type]="currentType"
+      [loading]="loading"
+      [error]="error"
+      [translate]="translate"
+      [page]="currentPage"
+      (pageChange)="onPageChange($event)"
+    ></app-results-panel>
+  </main>
+</div>
